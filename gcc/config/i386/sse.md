@@ -3427,6 +3427,16 @@
    (set_attr "type" "ssemuladd")
    (set_attr "mode" "<MODE>")])
 
+;; giaf
+(define_expand "fma4i_fmsub_<mode>"
+  [(set (match_operand:FMAMODE_AVX512 0 "register_operand")
+    (fma:FMAMODE_AVX512
+      (match_operand:FMAMODE_AVX512   1 "nonimmediate_operand")
+      (match_operand:FMAMODE_AVX512   2 "nonimmediate_operand")
+      (neg:FMAMODE_AVX512
+        (match_operand:FMAMODE_AVX512 3 "nonimmediate_operand"))))])
+
+
 (define_insn "*fma_fmsub_<mode>"
   [(set (match_operand:FMAMODE 0 "register_operand" "=v,v,v,x,x")
 	(fma:FMAMODE
@@ -3494,6 +3504,16 @@
    (set_attr "type" "ssemuladd")
    (set_attr "mode" "<MODE>")])
 
+;; giaf
+(define_expand "fma4i_fnmadd_<mode>"
+  [(set (match_operand:FMAMODE_AVX512 0 "register_operand")
+    (fma:FMAMODE_AVX512
+      (neg:FMAMODE_AVX512
+        (match_operand:FMAMODE_AVX512 1 "nonimmediate_operand"))
+      (match_operand:FMAMODE_AVX512   2 "nonimmediate_operand")
+      (match_operand:FMAMODE_AVX512   3 "nonimmediate_operand")))])
+      
+
 (define_insn "*fma_fnmadd_<mode>"
   [(set (match_operand:FMAMODE 0 "register_operand" "=v,v,v,x,x")
 	(fma:FMAMODE
@@ -3560,6 +3580,17 @@
   [(set_attr "isa" "fma_avx512f")
    (set_attr "type" "ssemuladd")
    (set_attr "mode" "<MODE>")])
+
+;; giaf
+(define_expand "fma4i_fnmsub_<mode>"
+  [(set (match_operand:FMAMODE_AVX512 0 "register_operand")
+    (fma:FMAMODE_AVX512
+      (neg:FMAMODE_AVX512
+        (match_operand:FMAMODE_AVX512 1 "nonimmediate_operand"))
+      (match_operand:FMAMODE_AVX512   2 "nonimmediate_operand")
+      (neg:FMAMODE_AVX512
+        (match_operand:FMAMODE_AVX512 3 "nonimmediate_operand"))))])
+
 
 (define_insn "*fma_fnmsub_<mode>"
   [(set (match_operand:FMAMODE 0 "register_operand" "=v,v,v,x,x")
